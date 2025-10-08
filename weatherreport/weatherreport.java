@@ -34,9 +34,37 @@ public class WeatherReport {
         System.out.println(report);
         assert(report != null);
     }
+
+// Strong assertion to fail 
+        private static void StrongTestRainy() {
+        IWeatherSensor sensor = new SensorStubHighPrecipitation();
+        String report = Report(sensor);
+        System.out.println("StrongTestRainy: " + report);
+
+        
+        assert report.toLowerCase().contains("rain") : "Expected rain, got: " + report;
+    }
+
+    private static void StrongTestStormy() {
+        IWeatherSensor sensor = new SensorStubStormy();
+        String report = Report(sensor);
+        System.out.println("StrongTestStormy: " + report);
+
+        assert report.equals("Alert, Stormy with heavy rain") : "Expected storm alert, got: " + report;
+    }
+
+     // ===============================
+
+
+    
     public static void main(String[] args) {
         TestRainy();
         TestHighPrecipitation();
+
+         // New strong tests
+        StrongTestRainy();
+        StrongTestStormy();
+
         System.out.println("All is well (maybe!)");
     }
 }
